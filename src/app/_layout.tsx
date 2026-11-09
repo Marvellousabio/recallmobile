@@ -55,6 +55,10 @@ function RootNav() {
         <Stack.Screen name="tutor/[courseId]" options={{ title: '' }} />
         <Stack.Screen name="premium" options={{ title: '', presentation: 'modal' }} />
         <Stack.Screen name="slot/new" options={{ title: t('courses.addClass'), presentation: 'modal' }} />
+        <Stack.Screen name="group/new" options={{ title: t('groups.create'), presentation: 'modal' }} />
+        <Stack.Screen name="group/join" options={{ title: t('groups.join'), presentation: 'modal' }} />
+        <Stack.Screen name="group/share" options={{ title: t('groups.shareLecture'), presentation: 'modal' }} />
+        <Stack.Screen name="group/[id]" options={{ title: '' }} />
       </Stack.Protected>
     </Stack>
   );

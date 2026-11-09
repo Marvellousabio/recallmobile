@@ -71,8 +71,19 @@ async function push(userId: string): Promise<number> {
   );
   items.sort((a, b) => PUSH_ORDER.indexOf(a.table_name) - PUSH_ORDER.indexOf(b.table_name));
 
+  // Lectures downloaded from a study group are device-local copies — never back them up.
+  const fromGroups = await db.getAllAsync<{ id: string }>(
+    `SELECT lecture_id id FROM group_downloads
+     UNION SELECT a.id FROM assets a JOIN group_downloads d ON d.lecture_id = a.lecture_id`,
+  );
+  const skip = new Set(fromGroups.map((r) => r.id));
+
   let done = 0;
   for (const it of items) {
+    if ((it.table_name === 'lectures' || it.table_name === 'assets') && skip.has(it.row_id)) {
+      await db.runAsync('DELETE FROM sync_outbox WHERE table_name = ? AND row_id = ?', it.table_name, it.row_id);
+      continue;
+    }
     try {
       await pushOne(userId, it.table_name, it.row_id, it.op);
       await db.runAsync('DELETE FROM sync_outbox WHERE table_name = ? AND row_id = ? AND created_at <= ?', it.table_name, it.row_id, it.last);

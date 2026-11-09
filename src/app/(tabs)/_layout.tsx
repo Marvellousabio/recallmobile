@@ -23,6 +23,7 @@ export default function TabsLayout() {
       <Tabs.Screen name="index" options={{ title: t('tabs.today'), tabBarIcon: icon('◉') }} />
       <Tabs.Screen name="courses" options={{ title: t('tabs.courses'), tabBarIcon: icon('▤') }} />
       <Tabs.Screen name="timetable" options={{ title: t('tabs.timetable'), tabBarIcon: icon('▦') }} />
+      <Tabs.Screen name="groups" options={{ title: t('groups.tab'), tabBarIcon: icon('◎') }} />
       <Tabs.Screen name="progress" options={{ title: t('tabs.progress'), tabBarIcon: icon('▲') }} />
       <Tabs.Screen name="me" options={{ title: t('tabs.me'), tabBarIcon: icon('●') }} />
     </Tabs>

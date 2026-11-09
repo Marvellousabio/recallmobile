@@ -115,7 +115,7 @@ async function queueAllForBackup() {
   if ((await db.getFirstAsync('SELECT 1 FROM kv WHERE key = ?', 'backup_seeded'))) return;
   for (const table of ['profile', 'courses', 'timetable_slots', 'lectures', 'assets']) {
     const rows = await db.getAllAsync<{ id: string }>(`SELECT id FROM ${table}`);
-    for (const r of rows) await enqueueChange(db, table, r.id, 'upsert');
+    for (const r of rows) await enqueueChange(db, table, r.id, 'upsert'); // group downloads are filtered out at push time
   }
   await db.runAsync("INSERT OR REPLACE INTO kv (key, value) VALUES ('backup_seeded', '1')");
 }

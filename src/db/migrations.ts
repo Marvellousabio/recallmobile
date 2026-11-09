@@ -192,4 +192,27 @@ export const MIGRATIONS: string[] = [
   );
   CREATE INDEX idx_tutor_course ON tutor_messages(course_id, created_at);
   `,
+  // 6 — study groups: offline cache of groups/shares + lectures downloaded from them
+  `
+  CREATE TABLE group_cache (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    invite_code TEXT NOT NULL,
+    owner_id TEXT NOT NULL,
+    members TEXT NOT NULL DEFAULT '[]',
+    fetched_at TEXT NOT NULL
+  );
+  CREATE TABLE group_share_cache (
+    id TEXT PRIMARY KEY,
+    group_id TEXT NOT NULL,
+    data TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  );
+  CREATE INDEX idx_share_cache_group ON group_share_cache(group_id, created_at);
+  CREATE TABLE group_downloads (
+    share_id TEXT PRIMARY KEY,
+    lecture_id TEXT NOT NULL,
+    downloaded_at TEXT NOT NULL
+  );
+  `,
 ];
