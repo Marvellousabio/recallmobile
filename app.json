@@ -2,6 +2,7 @@
   "expo": {
     "name": "Recall",
     "slug": "recall",
+    "owner": "bestrickys-team",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -21,11 +22,19 @@
       "package": "ng.recall.app"
     },
     "web": {
-      "output": "server",
+      "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
+      [
+        "expo-router",
+        {
+          "headers": {
+            "Cross-Origin-Embedder-Policy": "credentialless",
+            "Cross-Origin-Opener-Policy": "same-origin"
+          }
+        }
+      ],
       [
         "expo-splash-screen",
         {
@@ -50,8 +59,14 @@
           "cameraPermission": "Recall uses the camera to photograph the board and slides.",
           "photosPermission": "Recall lets you add photos of notes and slides."
         }
-      ]
+      ],
+      "expo-asset"
     ],
+    "extra": {
+      "eas": {
+        "projectId": "263b6388-3ebd-4113-a350-66205032e5a3"
+      }
+    },
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
